@@ -19,7 +19,7 @@ const initCodeEditor = () => {
     CodeMirror.modeURL = 'https://cdn.jsdelivr.net/npm/codemirror@5.65.5/mode/%N/%N.js';
     editor = new CodeMirror(byId('editor'), {
         lineNumbers: true,
-        theme: 'dracula',
+        theme: 'none',
         readOnly: readOnly,
         lineWrapping: false,
         scrollbarStyle: 'simple',
@@ -43,7 +43,7 @@ const initLangSelector = () => {
             value: shorten(e.name),
             data: { mime: e.mime, mode: e.mode },
         })),
-        showContent: 'down',
+        showContent: 'up',
         onChange: (e) => {
             const language = e.data || { mime: null, mode: null };
             editor.setOption('mode', language.mime);
