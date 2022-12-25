@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <title>NoPaste - No-database paste service</title>
+        <title>babe - send code and babes</title>
         <link
             rel="stylesheet"
             type="text/css"
@@ -14,31 +14,27 @@ npm/bootstrap@4.6.1/dist/css/bootstrap-grid.min.css,
 npm/slim-select@1.27.1/dist/slimselect.min.css,
 npm/codemirror@5.65.5/lib/codemirror.min.css,
 npm/codemirror@5.65.5/addon/scroll/simplescrollbars.css,
-npm/codemirror@5.65.5/theme/dracula.min.css,
+npm/codemirror@5.65.5/theme/shadowfox.min.css,
 npm/microtip@0.2.2/microtip.min.css
 "
         />
         <link rel="stylesheet" href="style.css" />
-        <link href="favicon.ico" rel="icon" type="image/x-icon" />
-        <link rel="canonical" href="https://nopaste.ml/" />
-        <meta
-            name="description"
-            property="og:description"
-            content="NoPaste is a client-side paste service which works with no database, and no back-end code. The data is stored entirely in the links and nowhere else"
-        />
-        <meta property="og:title" content="NoPaste - No-database paste service" />
-        <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bokub/nopaste@images/logo.png" />
-        <meta property="og:url" content="https://nopaste.ml/" />
+        <link rel="canonical" href="https://lo-kiss.github.io/babe/" />
+        <meta property="og:title" content="babe - send code and babes" />
+        <meta property="og:url" content="https://lo-kiss.github.io/babe/" />
         <meta property="og:type" content="website" />
         <script src="script.js" defer></script>
     </head>
-    <body class="m-0">
+    <body>
         <script>
             const readOnly = window.location !== window.parent.location || new URLSearchParams(window.location.search).has('readonly');
             if (readOnly) {
                 document.body.classList.add('readonly');
             }
         </script>
+
+        <div class="main">
+
         <div id="copy" class="container-fluid hidden hide-readonly">
             <div class="row my-1">
                 <div class="col my-1">
@@ -57,9 +53,9 @@ npm/microtip@0.2.2/microtip.min.css
         <div id="controls" class="container-fluid hide-readonly">
             <div class="row align-items-center justify-content-end my-1">
                 <div class="col-auto mb-1">
-                    <h1 class="my-0 name"><span class="deco">[</span> babe <span class="deco">]</span></h1>
+                    <h1 class="my-0 name">\\ babe</h1>
                 </div>
-                <div class="col"></div>
+                <div class="col"></div> 
                 <div class="col-auto my-1">
                     <select id="language"></select>
                 </div>
@@ -87,24 +83,19 @@ npm/microtip@0.2.2/microtip.min.css
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button class="py-1 px-2 mx-0" onclick="generateLink('url')" type="button">
-                        Generate link
-                    </button>
-                    <button class="py-1 px-2 mx-1 my-1" onclick="generateLink('markdown')" type="button">
-                        Generate markdown
-                    </button>
-                    <button class="py-1 px-2 mx-0 my-1" onclick="generateLink('iframe')" type="button">Embed</button>
+                    <button class="main-btn" onclick="generateLink('url')" type="button">link</button>
+                    <button class="main-btn" onclick="generateLink('markdown')" type="button">markdown</button>
+                    <button class="main-btn" onclick="generateLink('iframe')" type="button">embed</button>
                 </div>
                 <div class="col-auto">
-                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank" class="mx-3">src</a>
-                    <a href="javascript:void(0)" class="mx-3" data-micromodal-trigger="description-modal">abt</a>
+                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank">about</a>
                 </div>
             </div>
         </div>
         <footer id="footer" class="container-fluid">
             <div class="row my-1">
                 <div class="col mono hide-readonly" id="stats">Length: 0 | Lines: 1</div>
-                <div class="col mono show-readonly">Powered by NoPaste</div>
+                <div class="col mono show-readonly">babe</div>
                 <div class="col-auto mono show-readonly">
                     <a href="javascript:void(0)" onclick="openInNewTab()">
                         <span class="icon-edit"></span>
@@ -113,47 +104,16 @@ npm/microtip@0.2.2/microtip.min.css
                 </div>
             </div>
         </footer>
-        <div id="description-modal" data-micromodal-close class="modal">
-            <div tabindex="-1" class="modal-overlay">
-                <div role="dialog" class="modal-content p-3 m-3">
-                    <div class="modal-close" data-micromodal-close><span class="icon-close"></span></div>
-                    <h2 class="mt-0">What's a babe?</h2>
-
-                    <span class="accent">babe</span> is an open-source website similar to Pastebin where you can store any piece of code,
-                    and generate links for easy sharing<br /><br />
-
-                    However, what makes this special is that it works with <span class="accent">no database</span>, and
-                    <span class="accent">no back-end code</span>.<br />
-                    Instead, the data is compressed and <span class="accent">stored entirely in the link</span> that you share, nowhere else!
-
-                    <h3>Because of this design:</h3>
-                    Your data <span class="accent">cannot be deleted</span> from a babe<br />
-                    Your data <span class="accent">cannot be censored</span><br />
-                    The server hosting babe (or any clone of it) <span class="accent">cannot read or access</span> your data<br />
-                    Your data will be accessible <span class="accent">forever</span> (as long as you have the link)<br />
-                    You can access your data on <span class="accent">every NoPaste clone</span>, including
-                    <a href="https://github.com/bokub/nopaste/wiki/Deploy-your-own-version-of-NoPaste" rel="noopener" target="_blank"
-                        >your own</a
-                    ><br />
-                    Google <span class="accent">will not index</span> your data, even if your link is public<br />
-                    <br />
-                    If you want to know more, you can find more information on
-                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank" class="accent">GitHub</a>
-                    <div class="additional-info">
-                        Note: babe is a fork of
-                        <a href="https://github.com/bokub/nopaste" rel="noopener" target="_blank">NoPaste</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="error-modal" class="modal" data-micromodal-close>
             <div tabindex="-1" class="modal-overlay">
                 <div role="dialog" class="modal-content p-3 m-3">
                     <div class="modal-close" data-micromodal-close><span class="icon-close"></span></div>
-                    babe cannot decompress the URL<br /><br />
+                    Cannot decompress the URL<br><br>
                     It's possible that you clicked on an invalid link
                 </div>
             </div>
+        </div>
+
         </div>
 
         <script src="https://cdn.jsdelivr.net/combine/
