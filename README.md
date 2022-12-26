@@ -1,4 +1,5 @@
-[![Intro](https://github.com/bokub/nopaste/raw/images/intro.png)][intro-img]
+![image](https://user-images.githubusercontent.com/115636509/209525405-09c91de8-165f-400c-a3ac-01a761cf48ef.png)
+babe is a fork of NoPaste that suits my own likings. The NoPaste readme mentions its name so much that I'd rather leave it as is.
 
 # What is NoPaste?
 
