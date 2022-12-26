@@ -48,7 +48,7 @@ const initLangSelector = () => {
             const language = e.data || { mime: null, mode: null };
             editor.setOption('mode', language.mime);
             CodeMirror.autoLoadMode(editor, language.mode);
-            document.title = e.text && e.text !== 'Plain Text' ? `NoPaste - ${e.text} code snippet` : 'NoPaste';
+            document.title = e.text && e.text !== 'Plain Text' ? `${e.text} babe` : 'babe';
         },
     });
 

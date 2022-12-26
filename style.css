@@ -5,8 +5,6 @@
     --bg: #0c0c0d;
     --bg2: #2a2a2e;
     --outer-bg: #28c8b1;
-    --accent: red;
-    --radius: 10px;
 }
 
 html, body {height: 100%;}
@@ -26,7 +24,7 @@ body {
     font-variant-ligatures: none;
 }
 
-.main {
+main {
     width: 90rem;
     max-width: 100%;
     height: 50rem;
@@ -49,6 +47,8 @@ footer {
     background-color: var(--bg);
     z-index: 10;
 }
+
+#footer { color: #A0A0A0; }
 
 #progress {
     min-height: 3px;
@@ -84,16 +84,7 @@ a:focus {
     margin: 0 1rem;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
-/* .main-btn {
-    border: none;
-    outline: none;
-    background: var(--bg2);
-    padding: 0 .5rem;
-} */
+a:hover { text-decoration: underline; }
 
 .CodeMirror { height: 100%; font-size: 1.5em; }
 
@@ -153,37 +144,49 @@ h1 {
 button,
 input[type='text'],
 input[type='search'] {
-    background-color: #3b3b47 !important;
+    background-color: transparent !important;
     color: #fff !important;
-    border-radius: 2px !important;
-    border: 1px solid #ccc !important;
-    font: normal 14px Roboto, sans-serif;
+    border: none;
     height: 26px !important;
+}
+
+.ss-single-selected {
+    padding-left: 0 !important;
 }
 
 input::-webkit-search-cancel-button {
     display: none;
 }
 input::-moz-selection {
-    background-color: rgba(90, 95, 128, 0.99);
+    /* background-color: rgba(90, 95, 128, 0.99); */
 }
 input::selection {
-    background-color: rgba(90, 95, 128, 0.99);
+    /* background-color: rgba(90, 95, 128, 0.99); */
 }
 button {
     cursor: pointer;
 }
 button:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: hsla(0, 0%, 100%, 10%) !important;
 }
 .ss-content {
-    background-color: #282936;
-    color: #dedede;
+    background-color: var(--bg);
+    color: #ffffff;
     font-size: 14px;
+    border: none;
 }
 .ss-content .ss-disabled {
-    background-color: #3b3b47 !important;
+    background-color: hsla(0, 0%, 100%, 10%) !important;
 }
+
+.ss-search > input {
+    border: none !important;
+}
+
+.ss-option:hover {
+    background-color: hsla(0, 0%, 100%, 10%) !important;
+}
+
 
 /* Fonts */
 @font-face {
@@ -234,4 +237,14 @@ button:hover {
 }
 .icon-notes:before {
     content: '\e903';
+}
+
+@media screen and (max-width: 800px) {
+    body {
+        padding: 0;
+    }
+
+    main {
+        height: 100%;
+    }
 }

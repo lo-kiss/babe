@@ -18,9 +18,10 @@ npm/codemirror@5.65.5/theme/shadowfox.min.css,
 npm/microtip@0.2.2/microtip.min.css
 "
         />
+        <link href="https://api.fonts.coollabs.io/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css" />
         <link rel="canonical" href="https://lo-kiss.github.io/babe/" />
-        <meta property="og:title" content="babe - send code and babes" />
+        <meta property="og:title" content="send babes" />
         <meta property="og:url" content="https://lo-kiss.github.io/babe/" />
         <meta property="og:type" content="website" />
         <script src="script.js" defer></script>
@@ -33,7 +34,7 @@ npm/microtip@0.2.2/microtip.min.css
             }
         </script>
 
-        <div class="main">
+        <main class="main">
 
         <div id="copy" class="container-fluid hidden hide-readonly">
             <div class="row my-1">
@@ -52,10 +53,10 @@ npm/microtip@0.2.2/microtip.min.css
         <div id="editor"></div>
         <div id="controls" class="container-fluid hide-readonly">
             <div class="row align-items-center justify-content-end my-1">
+                <!--
                 <div class="col-auto mb-1">
                     <h1 class="my-0 name">\\ babe</h1>
-                </div>
-                <div class="col"></div> 
+                </div> -->
                 <div class="col-auto my-1">
                     <select id="language"></select>
                 </div>
@@ -82,13 +83,14 @@ npm/microtip@0.2.2/microtip.min.css
                         <span class="icon-wrap-text"></span>
                     </button>
                 </div>
+                <div class="col"></div> 
                 <div class="col-auto">
                     <button class="main-btn" onclick="generateLink('url')" type="button">link</button>
                     <button class="main-btn" onclick="generateLink('markdown')" type="button">markdown</button>
                     <button class="main-btn" onclick="generateLink('iframe')" type="button">embed</button>
                 </div>
                 <div class="col-auto">
-                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank">about</a>
+                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank">babe</a>
                 </div>
             </div>
         </div>
@@ -114,7 +116,7 @@ npm/microtip@0.2.2/microtip.min.css
             </div>
         </div>
 
-        </div>
+        </main>
 
         <script src="https://cdn.jsdelivr.net/combine/
 npm/lzma@2.3.2/src/lzma.min.js,
