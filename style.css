@@ -1,6 +1,3 @@
-/* App layout */
-@import url("https://api.fonts.coollabs.io/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
-
 :root {
     --bg: #0c0c0d;
     --bg2: #2a2a2e;
@@ -16,13 +13,16 @@ body {
     justify-content: center;
     color: #fff;
     background: var(--outer-bg);
-    font-family: "Roboto", Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    font-family: "Roboto", Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace, system-ui;
     margin: 0;
     padding: 0 .5rem;
 }
+
 * {
     font-variant-ligatures: none;
 }
+
+button { cursor: pointer; }
 
 main {
     width: 90rem;
@@ -31,18 +31,39 @@ main {
     max-height: 100%;
     display: flex;
     flex-flow: column;
-    /* border-radius: var(--radius); */
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
+.btn {
+	background: transparent;
+	padding: 0 .7rem;
+}
+
+.controls, .copy, .footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	/*        top right bottom left */
+	padding: .3rem 1rem .3rem 2rem;
+}
+
+.left, .right {
+	display: flex;
+	align-items: center;
+}
+
+.left { gap: .5rem; }
+.footer { padding-top: 0; }
+
 #editor {
     flex-grow: 1;
     overflow: auto;
+    position: relative;
 }
 
 #controls,
-#copy,
+.copy,
 footer {
     background-color: var(--bg);
     z-index: 10;
@@ -57,23 +78,31 @@ footer {
     width: 0;
 }
 
+.modal {
+	display: none;
+	width: 100%;
+	height: 100%;
+	place-content: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: var(--bg);
+	z-index: 10;
+}
+
 .hidden,
 select,
-#copy:not(.hidden) + #controls,
+.copy:not(.hidden) + #controls,
 body.readonly .hide-readonly,
 body:not(.readonly) .show-readonly,
 body.readonly:not(:hover) #footer {
     display: none;
 }
 
-#copy-link {
-    /* font-family: JetBrainsMono, sans-serif; */
-    width: 100%;
-}
+#copy-link { width: 100%; }
+#copy-link:focus { outline: 1px solid; }
 
 /* Styling */
-.name { font-weight: bold; }
-
 a,
 a:active,
 a:focus {
@@ -81,63 +110,13 @@ a:focus {
     outline: none;
     font-weight: bold;
     text-decoration: none;
-    margin: 0 1rem;
+    padding: 0 .5rem;
+    /* margin: 0 1rem; */
 }
-
 a:hover { text-decoration: underline; }
 
 .CodeMirror { height: 100%; font-size: 1.5em; }
-
-.CodeMirror-gutters {
-    background: black;
-    color: white;
-}
-
-h1 {
-    font-size: 24px;
-    white-space: nowrap;
-}
-
-/* Modals */
-.modal { display: none; }
-.modal.is-open { display: block; }
-.modal-content {
-    background-color: black;
-    max-width: 600px;
-    max-height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-    cursor: initial;
-    position: relative;
-}
-.modal-content .additional-info {
-    opacity: 0.75;
-    font-style: italic;
-    margin-top: 15px;
-    font-size: 0.95em;
-}
-.modal-overlay {
-    position: fixed;
-    background: rgba(0, 0, 0, 0.2);
-    right: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-.modal-close {
-    cursor: pointer;
-    position: absolute;
-    right: 8px;
-    top: 8px;
-}
-
-/* Form elements */
-
+.CodeMirror-gutters { background: black; color: white; }
 #controls .ss-main { width: 180px; }
 
 .ss-main .ss-single-selected,
@@ -150,22 +129,9 @@ input[type='search'] {
     height: 26px !important;
 }
 
-.ss-single-selected {
-    padding-left: 0 !important;
-}
+.ss-single-selected { padding-left: 0 !important; }
+input::-webkit-search-cancel-button { display: none; }
 
-input::-webkit-search-cancel-button {
-    display: none;
-}
-input::-moz-selection {
-    /* background-color: rgba(90, 95, 128, 0.99); */
-}
-input::selection {
-    /* background-color: rgba(90, 95, 128, 0.99); */
-}
-button {
-    cursor: pointer;
-}
 button:hover {
     background-color: hsla(0, 0%, 100%, 10%) !important;
 }
@@ -175,69 +141,10 @@ button:hover {
     font-size: 14px;
     border: none;
 }
-.ss-content .ss-disabled {
-    background-color: hsla(0, 0%, 100%, 10%) !important;
-}
 
-.ss-search > input {
-    border: none !important;
-}
-
-.ss-option:hover {
-    background-color: hsla(0, 0%, 100%, 10%) !important;
-}
-
-
-/* Fonts */
-@font-face {
-    font-family: 'JetBrainsMono';
-    src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.242/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2'),
-        url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.242/fonts/ttf/JetBrainsMonoNL-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-/* Icons */
-
-@font-face {
-    font-family: 'icomoon';
-    /* Can be updated using the JSON data from https://github.com/bokub/nopaste/issues/11 */
-    src: url('data:application/x-font-woff;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8SBccAAAC8AAAAYGNtYXAXVtKKAAABHAAAAFRnYXNwAAAAEAAAAXAAAAAIZ2x5ZkmZnrUAAAF4AAABVGhlYWQhhmIeAAACzAAAADZoaGVhB0IDyQAAAwQAAAAkaG10eBYAAoAAAAMoAAAAIGxvY2EBLgDcAAADSAAAABJtYXhwAAwAIwAAA1wAAAAgbmFtZZlKCfsAAAN8AAABhnBvc3QAAwAAAAAFBAAAACAAAwOaAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADpAwPA/8AAQAPAAEAAAAABAAAAAAAAAAAAAAAgAAAAAAADAAAAAwAAABwAAQADAAAAHAADAAEAAAAcAAQAOAAAAAoACAACAAIAAQAg6QP//f//AAAAAAAg6QD//f//AAH/4xcEAAMAAQAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAABANYAgQMqAtUACwAAAQcXBycHJzcnNxc3Ayru7jzu7jzu7jzu7gKZ7u487u487u487u4AAgCAACsDgAMrAAsAEAAAAQcnNzYzMh8BFhUUCQEXASMDdE6gTgwSEgxkDP0AAdig/iigAn9OoE4MDGQMEhL+QAHYoP4oAAAAAwCqACsDgALVABgAHAAgAAABMhcWFRQHBisBFSc3FTMyNzY1NCcmIyE1ARUhNRE1IRUC1kYyMjIyRlaAgGAiGhoaGiL9ygKs/VQBAAHVMjJGRjIyVoCAVhoaIiIaGlQBAFRU/axUVAADAIAAqwOAAqsAAwAHAAsAABM1IRUBIRUhETUhFYADAP0AAwD9AAIAAYFUVAEqVv5WVlYAAQAAAAEAAKuSQ39fDzz1AAsEAAAAAADfdA77AAAAAN90DvsAAAAAA4ADKwAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAADgAABAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAAAAAAAAIAAAAEAADWBAAAgAQAAKoEAACAAAAAAAAKABQAHgA4AFwAkACqAAAAAQAAAAgAIQADAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAcAAAABAAAAAAACAAcAYAABAAAAAAADAAcANgABAAAAAAAEAAcAdQABAAAAAAAFAAsAFQABAAAAAAAGAAcASwABAAAAAAAKABoAigADAAEECQABAA4ABwADAAEECQACAA4AZwADAAEECQADAA4APQADAAEECQAEAA4AfAADAAEECQAFABYAIAADAAEECQAGAA4AUgADAAEECQAKADQApGljb21vb24AaQBjAG8AbQBvAG8AblZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGljb21vb24AaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AblJlZ3VsYXIAUgBlAGcAdQBsAGEAcmljb21vb24AaQBjAG8AbQBvAG8AbkZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
-        format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
-}
-
-[class^='icon-'],
-[class*=' icon-'] {
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-size: 21px;
-}
-.icon-edit {
-    font-size: 14px;
-}
-
-.icon-close:before {
-    content: '\e900';
-}
-.icon-edit:before {
-    content: '\e901';
-}
-.icon-wrap-text:before {
-    content: '\e902';
-}
-.icon-notes:before {
-    content: '\e903';
-}
+.ss-search > input { border: none !important; }
+.ss-option:hover { background-color: hsla(0, 0%, 100%, 10%) !important; }
+.ss-content .ss-disabled { background-color: hsla(0, 0%, 100%, 10%) !important; }
 
 @media screen and (max-width: 800px) {
     body {

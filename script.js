@@ -6,13 +6,16 @@ let select = null;
 let clipboard = null;
 let statsEl = null;
 
+function qs(e) {
+	return document.querySelector(e);
+}
+
 const init = () => {
     handleLegacyUrl();
     initCodeEditor();
     initLangSelector();
     initCode();
     initClipboard();
-    initModals();
 };
 
 const initCodeEditor = () => {
@@ -65,7 +68,7 @@ const initCode = () => {
     decompress(base64, (code, err) => {
         if (err) {
             console.error('Failed to decompress data: ' + err);
-            MicroModal.show('error-modal');
+            qs("#error-modal").style.display = "grid";
             return;
         }
         editor.setValue(code);
@@ -92,12 +95,6 @@ const initClipboard = () => {
     clipboard = new ClipboardJS('.clipboard');
     clipboard.on('success', () => {
         hideCopyBar(true);
-    });
-};
-
-const initModals = () => {
-    MicroModal.init({
-        onClose: () => editor.focus(),
     });
 };
 
@@ -134,24 +131,22 @@ const hideCopyBar = (success) => {
         copyBar.classList.add('hidden');
         return;
     }
-    copyButton.innerText = 'Copied !';
+    copyButton.innerText = 'Copied';
     setTimeout(() => {
         copyBar.classList.add('hidden');
         copyButton.innerText = 'Copy';
     }, 800);
 };
 
-const disableLineWrapping = () => {
-    byId('disable-line-wrapping').classList.add('hidden');
-    byId('enable-line-wrapping').classList.remove('hidden');
-    editor.setOption('lineWrapping', false);
-};
-
-const enableLineWrapping = () => {
-    byId('enable-line-wrapping').classList.add('hidden');
-    byId('disable-line-wrapping').classList.remove('hidden');
-    editor.setOption('lineWrapping', true);
-};
+// FIXME: if checkbox is checked on page load the wrap still doesn't apply
+const wrapCheck = document.querySelector("#wrapLines");
+	wrapCheck.addEventListener('change', () => {
+		if (wrapCheck.checked) {
+			editor.setOption('lineWrapping', true);
+		} else {
+			editor.setOption('lineWrapping', false);
+		}
+	});
 
 const openInNewTab = () => {
     window.open(location.href.replace(/[?&]readonly/, ''));
@@ -163,7 +158,7 @@ const buildUrl = (rawData, mode) => {
     const query = shorten('Plain Text') === select.selected() ? '' : `?l=${encodeURIComponent(select.selected())}`;
     const url = base + query + '#' + rawData;
     if (mode === 'markdown') {
-        return `[NoPaste snippet](${url})`;
+        return `[code snippet](${url})`;
     }
     if (mode === 'iframe') {
         const height = editor['doc'].height + 45;
@@ -284,6 +279,10 @@ const testAllModes = () => {
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
+}
+
+function closeModal() {
+	qs("#error-modal").style.display = "none";
 }
 
 init();

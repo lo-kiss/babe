@@ -1,128 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        <title>babe - send code and babes</title>
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://cdn.jsdelivr.net/combine/
-npm/bootstrap@4.6.1/dist/css/bootstrap-grid.min.css,
+    <title>babe - send code and babes</title>
+    <link
+        rel="stylesheet"
+        type="text/css"
+        href="https://cdn.jsdelivr.net/combine/
 npm/slim-select@1.27.1/dist/slimselect.min.css,
 npm/codemirror@5.65.5/lib/codemirror.min.css,
 npm/codemirror@5.65.5/addon/scroll/simplescrollbars.css,
-npm/codemirror@5.65.5/theme/shadowfox.min.css,
-npm/microtip@0.2.2/microtip.min.css
+npm/codemirror@5.65.5/theme/shadowfox.min.css
 "
-        />
-        <link href="https://api.fonts.coollabs.io/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css" />
-        <link rel="canonical" href="https://lo-kiss.github.io/babe/" />
-        <meta property="og:title" content="send babes" />
-        <meta property="og:url" content="https://lo-kiss.github.io/babe/" />
-        <meta property="og:type" content="website" />
-        <script src="script.js" defer></script>
-    </head>
-    <body>
-        <script>
-            const readOnly = window.location !== window.parent.location || new URLSearchParams(window.location.search).has('readonly');
-            if (readOnly) {
-                document.body.classList.add('readonly');
-            }
-        </script>
+    />
+    <link href="https://api.fonts.coollabs.io/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <script>
+        const readOnly = window.location !== window.parent.location || new URLSearchParams(window.location.search).has('readonly');
+        if (readOnly) {
+            document.body.classList.add('readonly');
+        }
+    </script>
 
-        <main class="main">
+    <main class="main">
 
-        <div id="copy" class="container-fluid hidden hide-readonly">
-            <div class="row my-1">
-                <div class="col my-1">
-                    <input type="text" value="copy me" id="copy-link" class="px-2" onclick="this.setSelectionRange(0, this.value.length)" />
-                </div>
-                <div class="col-auto my-1">
-                    <button class="clipboard py-1 px-2 mx-1" id="copy-btn" data-clipboard-target="#copy-link" type="button">
-                        Copy
-                    </button>
-                    <button class="py-1 px-2 mx-1" onclick="hideCopyBar(false)" type="button">Cancel</button>
-                </div>
-            </div>
+    <div id="progress"></div>
+    <div id="editor">
+	    <div id="error-modal" class="modal">
+            Cannot decompress the URL<br><br>
+            It's possible that you clicked on an invalid link
+            <button class="modal-close" onclick="closeModal()" type="button">close</button>
+	    </div>
+    </div>
+    <div id="copy" class="copy hidden hide-readonly">
+            <input type="text" value="copy me" id="copy-link" onclick="this.setSelectionRange(0, this.value.length)" />
+            <button class="btn clipboard" id="copy-btn" data-clipboard-target="#copy-link" type="button">
+                Copy
+            </button>
+            <button class="btn" onclick="hideCopyBar(false)" type="button">Cancel</button>
+    </div>
+
+    <div id="controls" class="controls hide-readonly">
+    	<div class="left">
+            <select id="language"></select>
+            <input id="wrapLines" name="wrap-lines" type="checkbox" checked="false">
+            <label for="wrap-lines">wrap lines</label>
+    	</div>
+    	<div class="right">
+            <button class="btn" onclick="generateLink('url')" type="button">link</button>
+            <button class="btn" onclick="generateLink('markdown')" type="button">markdown</button>
+            <button class="btn" onclick="generateLink('iframe')" type="button">embed</button>
+            <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank">babe</a>
+    	</div>
+    </div>
+    <footer id="footer" class="footer">
+        <div class="hide-readonly" id="stats">Length: 0 | Lines: 1</div>
+        <div class="show-readonly">babe</div>
+        <div class="show-readonly">
+            <a href="javascript:void(0)" onclick="openInNewTab()">Edit</a>
         </div>
-        <div id="progress"></div>
-        <div id="editor"></div>
-        <div id="controls" class="container-fluid hide-readonly">
-            <div class="row align-items-center justify-content-end my-1">
-                <!--
-                <div class="col-auto mb-1">
-                    <h1 class="my-0 name">\\ babe</h1>
-                </div> -->
-                <div class="col-auto my-1">
-                    <select id="language"></select>
-                </div>
-                <div class="col-auto">
-                    <button
-                        onclick="enableLineWrapping()"
-                        type="button"
-                        id="enable-line-wrapping"
-                        aria-label="Enable line wrapping"
-                        data-microtip-position="top"
-                        role="tooltip"
-                    >
-                        <span class="icon-notes"></span>
-                    </button>
-                    <button
-                        onclick="disableLineWrapping()"
-                        type="button"
-                        id="disable-line-wrapping"
-                        aria-label="Disable line wrapping"
-                        data-microtip-position="top"
-                        role="tooltip"
-                        class="hidden"
-                    >
-                        <span class="icon-wrap-text"></span>
-                    </button>
-                </div>
-                <div class="col"></div> 
-                <div class="col-auto">
-                    <button class="main-btn" onclick="generateLink('url')" type="button">link</button>
-                    <button class="main-btn" onclick="generateLink('markdown')" type="button">markdown</button>
-                    <button class="main-btn" onclick="generateLink('iframe')" type="button">embed</button>
-                </div>
-                <div class="col-auto">
-                    <a href="https://github.com/lo-kiss/babe" rel="noopener" target="_blank">babe</a>
-                </div>
-            </div>
-        </div>
-        <footer id="footer" class="container-fluid">
-            <div class="row my-1">
-                <div class="col mono hide-readonly" id="stats">Length: 0 | Lines: 1</div>
-                <div class="col mono show-readonly">babe</div>
-                <div class="col-auto mono show-readonly">
-                    <a href="javascript:void(0)" onclick="openInNewTab()">
-                        <span class="icon-edit"></span>
-                        Edit
-                    </a>
-                </div>
-            </div>
-        </footer>
-        <div id="error-modal" class="modal" data-micromodal-close>
-            <div tabindex="-1" class="modal-overlay">
-                <div role="dialog" class="modal-content p-3 m-3">
-                    <div class="modal-close" data-micromodal-close><span class="icon-close"></span></div>
-                    Cannot decompress the URL<br><br>
-                    It's possible that you clicked on an invalid link
-                </div>
-            </div>
-        </div>
+    </footer>
+    </main>
 
-        </main>
-
-        <script src="https://cdn.jsdelivr.net/combine/
+    <script src="https://cdn.jsdelivr.net/combine/
 npm/lzma@2.3.2/src/lzma.min.js,
 npm/slim-select@1.27.1/dist/slimselect.min.js,
 npm/clipboard@2.0.11/dist/clipboard.min.js,
-npm/micromodal@0.4.10/dist/micromodal.min.js,
 npm/codemirror@5.65.5,
 npm/codemirror@5.65.5/addon/mode/loadmode.min.js,
 npm/codemirror@5.65.5/addon/mode/overlay.min.js,
@@ -131,5 +80,5 @@ npm/codemirror@5.65.5/addon/mode/simple.min.js,
 npm/codemirror@5.65.5/addon/scroll/simplescrollbars.js,
 npm/codemirror@5.65.5/mode/meta.min.js
 "></script>
-    </body>
+</body>
 </html>
