@@ -1,5 +1,10 @@
-![image](https://user-images.githubusercontent.com/115636509/209525405-09c91de8-165f-400c-a3ac-01a761cf48ef.png)
-babe is a fork of NoPaste that suits my own likings. The NoPaste readme mentions its name so much that I'd rather leave it as is.
+![2023-01-14_18-23](https://user-images.githubusercontent.com/115636509/212483152-23c65922-219e-47bb-b7f1-55216b8edac5.png)
+babe is a fork of NoPaste that suits my own likings. 
+
+**changes:**
+- removed micromodal, microtip, bootstrap-grid packages
+
+
 
 # What is NoPaste?
 
