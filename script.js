@@ -10,6 +10,11 @@ function qs(e) {
 	return document.querySelector(e);
 }
 
+function toggleBgBlur() {
+  console.log("el glinbo")
+  qs(".blur-div").classList.toggle("blur-bg")
+}
+
 const init = () => {
     handleLegacyUrl();
     initCodeEditor();

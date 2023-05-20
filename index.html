@@ -28,6 +28,8 @@ npm/codemirror@5.65.5/theme/shadowfox.min.css
         }
     </script>
 
+    <div class="blur-div blur-bg"></div>
+
     <main class="main">
 
     <div id="progress"></div>
@@ -51,6 +53,7 @@ npm/codemirror@5.65.5/theme/shadowfox.min.css
             <select id="language"></select>
             <input id="wrapLines" name="wrap-lines" type="checkbox" checked="false">
             <label for="wrap-lines">wrap lines</label>
+            <button class="btn" id="toggleBlurBtn" onclick="toggleBgBlur()" type="button">toggle blur</button>
     	</div>
     	<div class="right">
             <button class="btn" onclick="generateLink('url')" type="button">link</button>
